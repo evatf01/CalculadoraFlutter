@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Calculadora',
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
   }
@@ -29,6 +32,8 @@ final txtResultado = TextEditingController();
 class _State extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     return Scaffold(
         backgroundColor: const Color.fromARGB(250, 100, 100, 100),
         appBar: AppBar(title: const Text("Calculadora")),
@@ -235,7 +240,7 @@ class _State extends State<MyHomePage> {
           ),
           onPressed: () {
             setState(() {
-              txtResultado.text = txtEntrada.text;
+              calcular();
             });
           },
           style: ButtonStyle(
@@ -252,5 +257,20 @@ class _State extends State<MyHomePage> {
         ),
       ),
     );
+  }
+
+  void calcular() {
+    try {
+      Parser p = Parser();
+      ContextModel cm = ContextModel();
+      Expression exp = p.parse(txtEntrada.text);
+      setState(() {
+        txtResultado.text = exp.evaluate(EvaluationType.REAL, cm).toString();
+      });
+    } catch (e) {
+      setState(() {
+        txtResultado.text = "Error";
+      });
+    }
   }
 }
