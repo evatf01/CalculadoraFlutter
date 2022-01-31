@@ -5,24 +5,24 @@ import 'dart:math';
 import 'dart:math' show pi;
 
 void main() {
-  runApp(MyApp(txtEntrada2.text.toString()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp(String string, {Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Calculadora',
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+      home: MyHomePage(txtResultado2.text),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage(String text, {Key? key}) : super(key: key);
 
   @override
   _State createState() => _State();
@@ -41,32 +41,13 @@ class _State extends State<MyHomePage> {
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(250, 30, 30, 30),
           title: const Text(
-            "",
+            "Calculadora",
             style: TextStyle(
               color: Colors.white,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
             ),
           ),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: IconButton(
-                icon: const Icon(
-                  Icons.calculate,
-                  color: Colors.white,
-                  size: 40.0,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CalculadoraAvanzada()),
-                  );
-                },
-              ),
-            )
-          ],
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -74,10 +55,10 @@ class _State extends State<MyHomePage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: TextField(
-                decoration: const InputDecoration.collapsed(
-                    hintText: "0.0",
+                decoration: InputDecoration.collapsed(
+                    hintText: txtResultado2.text.toString(),
                     focusColor: Colors.white,
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         fontSize: 40.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
@@ -97,7 +78,9 @@ class _State extends State<MyHomePage> {
                       hintText: "",
                       fillColor: Colors.white,
                       hintStyle: TextStyle(
-                          fontSize: 40.0, fontWeight: FontWeight.bold),
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
                       focusColor: Colors.white),
                   style: const TextStyle(
                       fontSize: 40.0,
@@ -108,11 +91,12 @@ class _State extends State<MyHomePage> {
                 )),
             Container(height: 70.0),
             Padding(
-              padding: const EdgeInsets.only(left: 90.0),
+              padding: const EdgeInsets.only(left: 10.0),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
+                  btnIcono(),
                   btnAC('AC', const Color.fromARGB(250, 100, 100, 100)),
                   btnBorrar(),
                   botonOperdaor('/'),
@@ -186,9 +170,48 @@ class _State extends State<MyHomePage> {
                 const Color.fromARGB(250, 30, 30, 30)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(40.0),
                   side: const BorderSide(
                       width: 3.5, color: Color.fromARGB(250, 229, 197, 139))),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget btnIcono() {
+    return Container(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: ElevatedButton(
+          onPressed: () {},
+          style: ButtonStyle(
+            minimumSize: MaterialStateProperty.all(const Size(85.0, 85.0)),
+            backgroundColor: MaterialStateProperty.all<Color>(
+                const Color.fromARGB(250, 244, 217, 168)),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40.0),
+                  side: const BorderSide(width: 3.5, color: Colors.black)),
+            ),
+          ),
+          child: Center(
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              icon: const Icon(
+                Icons.calculate,
+                color: Colors.black,
+                size: 40.0,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CalculadoraAvanzada()),
+                );
+              },
             ),
           ),
         ),
@@ -220,7 +243,7 @@ class _State extends State<MyHomePage> {
                 const Color.fromARGB(250, 244, 217, 168)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(40.0),
                   side: const BorderSide(width: 3.5, color: Colors.black)),
             ),
           ),
@@ -254,7 +277,7 @@ class _State extends State<MyHomePage> {
                 const Color.fromARGB(250, 244, 217, 168)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(40.0),
                   side: const BorderSide(width: 3.5, color: Colors.black)),
             ),
           ),
@@ -281,7 +304,7 @@ class _State extends State<MyHomePage> {
                 const Color.fromARGB(250, 244, 217, 168)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(40.0),
                   side: const BorderSide(width: 3.5, color: Colors.black)),
             ),
           ),
@@ -316,7 +339,7 @@ class _State extends State<MyHomePage> {
                   const Color.fromARGB(250, 244, 217, 168)),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
+                    borderRadius: BorderRadius.circular(30.0),
                     side: const BorderSide(width: 3.5, color: Colors.black)),
               ),
             ),
@@ -327,11 +350,6 @@ class _State extends State<MyHomePage> {
   }
 
   void calcular() {
-    if (txtEntrada2.text.toString().isNotEmpty) {
-      txtEntrada.text = txtEntrada2.text.toString();
-    } else {
-      txtEntrada.text = txtEntrada2.text.toString();
-    }
     try {
       Parser p = Parser();
       ContextModel cm = ContextModel();
@@ -366,9 +384,9 @@ class _State2 extends State<CalculadoraAvanzada> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
     return Scaffold(
-        backgroundColor: const Color.fromARGB(250, 40, 40, 40),
+        backgroundColor: const Color.fromARGB(250, 30, 30, 30),
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(250, 40, 40, 40),
+          backgroundColor: const Color.fromARGB(250, 30, 30, 30),
           title: const Text(
             "",
             style: TextStyle(
@@ -377,26 +395,6 @@ class _State2 extends State<CalculadoraAvanzada> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: IconButton(
-                icon: const Icon(
-                  Icons.calculate,
-                  color: Colors.white,
-                  size: 40.0,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            MyApp(txtEntrada2.text.toString())),
-                  );
-                },
-              ),
-            )
-          ],
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -441,10 +439,10 @@ class _State2 extends State<CalculadoraAvanzada> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
+                btnIcono(),
                 btnAC('AC', const Color.fromARGB(250, 100, 100, 100)),
                 btnBorrar(),
-                botonOperdaor('('),
-                botonOperdaor(')'),
+                botonLog('log'),
               ],
             ),
             Row(
@@ -488,6 +486,45 @@ class _State2 extends State<CalculadoraAvanzada> {
             ),
           ],
         ));
+  }
+
+  Widget btnIcono() {
+    return Container(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: ElevatedButton(
+          onPressed: () {},
+          style: ButtonStyle(
+            minimumSize: MaterialStateProperty.all(const Size(85.0, 85.0)),
+            backgroundColor: MaterialStateProperty.all<Color>(
+                const Color.fromARGB(250, 244, 217, 168)),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40.0),
+                  side: const BorderSide(width: 3.5, color: Colors.black)),
+            ),
+          ),
+          child: Center(
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              icon: const Icon(
+                Icons.calculate,
+                color: Colors.black,
+                size: 40.0,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MyHomePage(txtResultado2.text)),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget boton(texto) {
@@ -721,6 +758,46 @@ class _State2 extends State<CalculadoraAvanzada> {
               try {
                 double num = double.parse(txtEntrada2.text);
                 txtResultado2.text = sqrt(num).toStringAsPrecision(4);
+              } catch (e) {
+                setState(() {
+                  txtResultado2.text = "Error";
+                });
+              }
+            });
+          },
+          style: ButtonStyle(
+            minimumSize: MaterialStateProperty.all(const Size(85.0, 85.0)),
+            backgroundColor: MaterialStateProperty.all<Color>(
+                const Color.fromARGB(250, 244, 217, 168)),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  side: const BorderSide(width: 3.5, color: Colors.black)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  botonLog(String texto) {
+    return Container(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: ElevatedButton(
+          child: Text(
+            texto,
+            style: const TextStyle(
+                fontSize: 25.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.black),
+          ),
+          onPressed: () {
+            setState(() {
+              try {
+                double num = double.parse(txtEntrada2.text);
+                txtResultado2.text = log(num).toStringAsPrecision(4);
               } catch (e) {
                 setState(() {
                   txtResultado2.text = "Error";
